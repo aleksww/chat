@@ -15,15 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from django.contrib.auth import views
+from django.contrib.auth.decorators import login_required
 
 from core.forms import LoginForm
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
+    url(r'^$', 
+        login_required(TemplateView.as_view(template_name='chat.html')),
+        name="home"),
     url(r'^login/$',
         views.login,
         {'template_name': 'registration/login.html',
@@ -34,4 +39,5 @@ urlpatterns = [
         views.logout,
         {'next_page': 'login'},
         name="logout"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

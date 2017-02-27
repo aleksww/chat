@@ -1,0 +1,28 @@
+
+
+/* ==========================================================================
+   Chat's custom styles
+   ========================================================================== */
+
+/* ========= Login block ========== */
+
+#login {
+    margin: 100px auto;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-top: 60px;
+}
+
+.room, .users, .send {
+    border: 1px solid black;
+}
+
+.navbar-inverse {
+    background-color: #2969A8;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
