@@ -16,9 +16,22 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.contrib.auth import views
+
+from .forms import LoginForm
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='index.html')),
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
+    url(r'^login/$',
+        views.login,
+        {'template_name': 'registration/login.html',
+         'authentication_form': LoginForm,
+         'redirect_authenticated_user': True},
+        name="login"),
+    url(r'^logout/$',
+        views.logout,
+        {'next_page': 'login'},
+        name="logout"),
 ]
