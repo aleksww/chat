@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.contrib.auth import views
 
-from .forms import LoginForm
+from core.forms import LoginForm
 
 
 urlpatterns = [
