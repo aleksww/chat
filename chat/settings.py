@@ -144,11 +144,8 @@ LOGIN_URL = 'login'
 # Channels settings
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'BACKEND': 'asgiref.inmemory.ChannelLayer',
         'ROUTING': 'chat.routing.channel_routing',
-        "CONFIG": {
-            "hosts": [( os.environ.get('IP', 'localhost'), 6379)],
-        },
     },
 }
 
