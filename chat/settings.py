@@ -137,7 +137,33 @@ LOGIN_URL = 'login'
 # Channels settings
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'asgiref.inmemory.ChannelLayer',
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
         'ROUTING': 'chat.routing.channel_routing',
+        "CONFIG": {
+            "hosts": [( os.environ.get('IP', 'localhost'), 6379)],
+        },
+    },
+}
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO'
+        },
+        'core.consumers': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'INFO',
+       },
     },
 }

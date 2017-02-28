@@ -1,7 +1,8 @@
 {% extends 'index.html' %}
-{% load i18n %}
+{% load static i18n %}
 
 {% block content %}
+
 <div class="container">
     <div class="row">
         <h4 class="text-center">CHAT ROOM</h4>
@@ -11,10 +12,8 @@
                 <div class="panel-heading">
                     RECENT CHAT HISTORY
                 </div>
-                <div id="room" class="panel-body">
-                    <ul id="msg" class="media-list"  style="height: 400px; overflow: auto">
-                        
-                    </ul>
+                <div class="panel-body">
+                    <ul id="messages" class="media-list"  style="height: 200px; overflow: auto"></ul>
                 </div>
                 <div class="panel-footer">
                     <form id="sender" class="input-group">
@@ -29,20 +28,12 @@
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                   ONLINE USERS
+                   ONLINE USER
                 </div>
                 <div class="panel-body">
                     <ul class="media-list">
-                        <li class="media">
-                            <div class="media-body">
-                                <div class="media">
-                                    <a class="pull-left" href="#"></a>
-                                    <div class="media-body">
-                                        <h5>Alex Deo | User </h5>
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-                            </div>
+                        <li id="users" class="media">
+                            <div class="media-body">{{ request.user }}</div>
                        </li>
                     </ul>
                 </div>
@@ -50,4 +41,9 @@
         </div>
 </div>
 </div>
+
+{% block script  %}
+ <script src="{% static 'js/reconnecting-websocket.min.js' %}"></script>
+ <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
 {% endblock %}

@@ -2,23 +2,33 @@ $(function () {
     // Correctly decide between ws:// and wss://
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws",
         ws_path = ws_scheme + '://' + window.location.host + "/chat/",
-        socket = new WebSocket(ws_path);
+        socket = new ReconnectingWebSocket(ws_path);
     
     console.log("Connecting to " + ws_path);
 
-    var form =  $("#sender");
+    var form = $("#sender");
 
     // Handle incoming messages
     socket.onmessage = function (message) {
-        var div_msg = $('#msg'),
-            data = JSON.parse(message.data),
-            msg = '<li class="media"><div class="media-body"><div class="media"><div class="media-body">' +
-               data.msg + '<br/><small class="text-muted">' + data.user + ' | ' + data.date + '</small><hr/></div></div></div></li>';
+        var messages = $('#messages'),
+            users = $('#users'),
+            data = JSON.parse(message.data);
 
-        console.log("Got websocket message " + message.data);
+            if (data.command == 'send') {
+                var msg = '';
 
-        div_msg.append(msg);
-        div_msg.scrollTop(div_msg[0].scrollHeight);
+                if (data.msg == 'connected') {
+                    msg = '<li class="media"><div class="media-body"> Hello!' +
+                              '<br/><small class="text-muted">' + 
+                               data.user + ' | ' + data.date + '</small><hr/></div></li>';
+                } else {
+                    msg = '<li class="media"><div class="media-body">' +
+                               data.msg + '<br/><small class="text-muted">' + 
+                               data.user + ' | ' + data.date + '</small><hr/></div></li>';
+                }
+                messages.append(msg);
+                messages.scrollTop(messages[0].scrollHeight);
+            }
     };
 
     // Handle send message
@@ -26,13 +36,15 @@ $(function () {
         e.preventDefault();
         var msg = form.find("input").val();
         if (msg != '') {
-            form.find("input").val('');
+            form.find("input").val('').focus();
             socket.send(msg);
         }
     });
 
-    // Helpful debugging
+    
     socket.onopen = function () {
+        socket.send('connected');
+        // Helpful debugging
         console.log("Connected to chat socket");
     };
     socket.onclose = function () {
