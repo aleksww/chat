@@ -22,3 +22,11 @@ class Message(models.Model):
             'user': self.user.username,
             'message': self.message,
             'timestamp': self.formatted_timestamp}
+
+
+class Chat(models.Model):
+    name = models.CharField(max_length=50, default='chat')
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+    def __str__(self):
+        return self.name

@@ -27,14 +27,8 @@ from core import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.chat, name="home"),
-    url(
-        r'^login/$', auth_views.login, 
-        {'template_name': 'registration/login.html',
-         'authentication_form': LoginForm, 
-         'redirect_authenticated_user': True},
-        name="login"),
-    url(r'^logout/$', auth_views.logout,
-        {'next_page': 'login'}, name="logout"),
+    url(r'^login/$', views.login_view, name="login"),
+    url(r'^logout/$', views.logout_view, name="logout"),
 ]
 
 if settings.DEBUG:

@@ -43,9 +43,11 @@
                 </div>
                 <div class="panel-body">
                     <ul class="media-list">
+                        {% for user in users.all %}
                         <li id="users" class="media">
-                            <div class="media-body">{{ request.user }}</div>
+                            <div class="media-body">{{ user }}</div>
                        </li>
+                       {% endfor %}
                     </ul>
                 </div>
             </div>
