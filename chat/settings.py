@@ -28,7 +28,7 @@ SECRET_KEY = 'l*x$($m4l*n6z6umhc@-)#ae8gxyux4^(de21@6w@bdg-@$#^i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get('C9_HOSTNAME', 'localhost').split(',')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
