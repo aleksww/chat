@@ -5,7 +5,7 @@ This is django chat.
 
 2). pip install virtualenv
 
-3). virualenv (-p path/bin/python3) env
+3). virtualenv (-p path/bin/python3) env
 
 4). source env/bin/activate
 
