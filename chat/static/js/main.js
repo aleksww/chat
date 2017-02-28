@@ -17,18 +17,13 @@ $(function () {
             if (data.command == 'send') {
                 var msg = '';
 
-                if (data.msg == 'connected') {
-                    msg = '<li class="media"><div class="media-body"> Hello!' +
-                              '<br/><small class="text-muted">' + 
-                               data.user + ' | ' + data.date + '</small><hr/></div></li>';
-                } else {
                     msg = '<li class="media"><div class="media-body">' +
                                data.msg + '<br/><small class="text-muted">' + 
                                data.user + ' | ' + data.date + '</small><hr/></div></li>';
-                }
-                messages.append(msg);
-                messages.scrollTop(messages[0].scrollHeight);
             }
+            messages.append(msg);
+            messages.scrollTop(messages[0].scrollHeight);
+
     };
 
     // Handle send message
@@ -41,10 +36,9 @@ $(function () {
         }
     });
 
-    
+    // Helpful debugging    
     socket.onopen = function () {
-        socket.send('connected');
-        // Helpful debugging
+
         console.log("Connected to chat socket");
     };
     socket.onclose = function () {

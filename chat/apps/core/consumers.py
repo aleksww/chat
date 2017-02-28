@@ -6,6 +6,7 @@ from channels import Channel, Group
 from channels.sessions import channel_session
 from channels.auth import channel_session_user, channel_session_user_from_http
 
+from .models import Message
 
 log = logging.getLogger(__name__)
 
@@ -29,6 +30,9 @@ def ws_message(message):
             "msg": message['text'],
             "user": message.user.username,
             "date": datetime.now().strftime("%d %b at %I:%M%p")})})
+    Message.objects.create(
+        user=message.user,
+        message=message['text'])
 
 
 # Connected to websocket.disconnect

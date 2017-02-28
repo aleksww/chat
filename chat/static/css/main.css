@@ -12,11 +12,7 @@
 
 body {
   /* Margin bottom by footer height */
-  margin-top: 60px;
-}
-
-.room, .users, .send {
-    border: 1px solid black;
+  margin-top: 50px;
 }
 
 .navbar-inverse {

@@ -18,26 +18,23 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from django.contrib.auth import views
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
+
 
 from core.forms import LoginForm
+from core import views
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', 
-        login_required(TemplateView.as_view(template_name='chat.html')),
-        name="home"),
-    url(r'^login/$',
-        views.login,
+    url(r'^$', views.chat, name="home"),
+    url(
+        r'^login/$', auth_views.login, 
         {'template_name': 'registration/login.html',
-         'authentication_form': LoginForm,
+         'authentication_form': LoginForm, 
          'redirect_authenticated_user': True},
         name="login"),
-    url(r'^logout/$',
-        views.logout,
-        {'next_page': 'login'},
-        name="logout"),
+    url(r'^logout/$', auth_views.logout,
+        {'next_page': 'login'}, name="logout"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
