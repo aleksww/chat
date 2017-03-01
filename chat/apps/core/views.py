@@ -41,7 +41,7 @@ def login_view(request):
 
         if user and user.is_active:
             login(request, user)
-            chat = Chat.objects.get(name='chat')
+            chat = Chat.objects.get_or_create(name='chat')
             chat.user.add(user)
             log.info('User %s log in', user)
             return redirect(settings.LOGIN_REDIRECT_URL)

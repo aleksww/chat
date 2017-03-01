@@ -26,7 +26,7 @@ class Message(models.Model):
 
 class Chat(models.Model):
     name = models.CharField(max_length=50, default='chat')
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL, null=True)
 
     def __str__(self):
         return self.name
