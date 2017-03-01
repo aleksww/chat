@@ -1,4 +1,6 @@
 $(function () {
+    var messages = $('#messages'),
+        users = $('#users');
     // Correctly decide between ws:// and wss://
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws",
         ws_path = ws_scheme + '://' + window.location.host + "/chat/",
@@ -10,9 +12,7 @@ $(function () {
 
     // Handle incoming messages
     socket.onmessage = function (message) {
-        var messages = $('#messages'),
-            users = $('#users'),
-            data = JSON.parse(message.data);
+        var data = JSON.parse(message.data);
 
             if (data.command == 'send') {
                 var msg = '';
@@ -38,7 +38,6 @@ $(function () {
 
     // Helpful debugging    
     socket.onopen = function () {
-
         console.log("Connected to chat socket");
     };
     socket.onclose = function () {

@@ -24,7 +24,7 @@ def logout_view(request):
     logout(request)
 
     chat = Chat.objects.get(name='chat')
-    chat.user.remove(user)
+    chat.user.remove(user.id)
     log.info('User %s log out', user)
 
     return redirect(settings.LOGIN_URL)
@@ -42,7 +42,8 @@ def login_view(request):
         if user and user.is_active:
             login(request, user)
             chat, created = Chat.objects.get_or_create(name='chat')
-            chat.user.add(user)
+            print(user)
+            chat.user.add(user.id)
             log.info('User %s log in', user)
             return redirect(settings.LOGIN_REDIRECT_URL)
 
