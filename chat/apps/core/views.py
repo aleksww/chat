@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Message, Chat
 from core.forms import LoginForm
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 @login_required
@@ -19,32 +19,31 @@ def chat(request):
     return render(request, "chat.html", {'messages': messages, 'users': users})
 
 
+@login_required
 def logout_view(request):
     user = request.user
     logout(request)
 
     chat = Chat.objects.get(name='chat')
     chat.user.remove(user.id)
-    log.info('User %s log out', user)
+    logger.info('User %s log out', user)
 
     return redirect(settings.LOGIN_URL)
 
 
 def login_view(request):
-    form = LoginForm(request.POST or None)
-    context = { 'form': form, }
+    form = LoginForm(data=request.POST or None)
+    context = {'form': form,}
    
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
+    if request.method == 'POST' and form.is_valid():
+        user = form.get_user()
+        login(request, user)
 
-        if user and user.is_active:
-            login(request, user)
-            chat, created = Chat.objects.get_or_create(name='chat')
-            print(user)
-            chat.user.add(user.id)
-            log.info('User %s log in', user)
-            return redirect(settings.LOGIN_REDIRECT_URL)
+        chat, created = Chat.objects.get_or_create(name='chat')
+        chat.user.add(user.id)
 
+        logger.info('User %s log in', user)
+
+        return redirect(settings.LOGIN_REDIRECT_URL)
+    
     return render(request, 'registration/login.html', context)

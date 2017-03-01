@@ -7,7 +7,7 @@
     <div class="row">
         <h4 class="text-center">CHAT ROOM</h4>
         <br /><br />
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     RECENT CHAT HISTORY
@@ -36,16 +36,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                    ONLINE USER
                 </div>
                 <div class="panel-body">
-                    <ul class="media-list">
+                    <ul id="users" class="media-list" style="height: 400px; overflow: auto">
                         {% for user in users.all %}
-                        <li id="users" class="media">
-                            <div class="media-body"{% if user == request.user %}style="color: red;"{% endif %}>{{ user }}</div>
+                        <li class="media"
+                                {% if user == request.user %}style="font-weight: bold;"{% endif %}
+                                id="{{ user.id }}">{{ user }}
                        </li>
                        {% endfor %}
                     </ul>
