@@ -45,7 +45,7 @@
                     <ul class="media-list">
                         {% for user in users.all %}
                         <li id="users" class="media">
-                            <div class="media-body">{{ user }}</div>
+                            <div class="media-body"{% if user == request.user %}style="color: red;"{% endif %}>{{ user }}</div>
                        </li>
                        {% endfor %}
                     </ul>

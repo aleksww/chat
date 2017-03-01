@@ -7,3 +7,8 @@ __pycache__/
 env/
 .c9
 db.sqlite3
+
+venv
+*.pyc
+staticfiles
+.env
