@@ -13,6 +13,7 @@ $(function () {
 
     socket.onmessage = function(message) {
         var data = JSON.parse(message.data);
+
         if (data.type == "m") {
             var msg = '<li class="media"><div class="media-body">' +
                   data.message + '<br/><small class="text-muted">' +
@@ -20,6 +21,7 @@ $(function () {
             messages.append(msg);
             messages.scrollTop(messages[0].scrollHeight);
         } else if (data.type == "u") {
+
             if (data.message == "add") {
                 var user = '<li class="media" id="' + data.id + '">' + data.user + '</li>';
                 users.append(user);
@@ -29,6 +31,7 @@ $(function () {
             } else {
                 console.log("Unknow text message");
             }
+    
         } else {
             console.log("Unknow type message");
         }

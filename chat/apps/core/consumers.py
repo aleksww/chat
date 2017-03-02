@@ -20,8 +20,7 @@ def ws_connect(message):
 
 @channel_session_user
 def ws_message(message):
-    print(message.user.username)
-    user = message.user.username 
+    user = message.user.username
     Group("chat").send({
         "text": json.dumps({
             "type": "m",
